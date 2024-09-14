@@ -64,7 +64,7 @@ class JobAdapter(private val onItemClick:(Result)->Unit ):ListAdapter<Result,Job
                     val contactPreference = result.contact_preference
                     if (contactPreference?.preference == 1) {
                         val whatsappLink = contactPreference.whatsapp_link
-                        if (!whatsappLink.isNullOrEmpty()) {
+                        if (whatsappLink.isNotEmpty()) {
                             val intent = Intent(Intent.ACTION_VIEW)
                             intent.data = Uri.parse(whatsappLink)
                             try {
