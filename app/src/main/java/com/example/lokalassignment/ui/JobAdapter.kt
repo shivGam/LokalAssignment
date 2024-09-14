@@ -1,7 +1,7 @@
 package com.example.lokalassignment.ui
 
 
-import com.example.lokalassignment.model.Job
+import com.example.lokalassignment.model.Result
 import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.graphics.Color
@@ -14,7 +14,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.lokalassignment.databinding.CardJobBinding
 import com.example.lokalassignment.util.Utils
 
-class JobAdapter(private val onItemClick:(Job)->Unit ):ListAdapter<Job,JobAdapter.JobViewHolder>(JobDiffCallback()){
+class JobAdapter(private val onItemClick:(Result)->Unit ):ListAdapter<Result,JobAdapter.JobViewHolder>(JobDiffCallback()){
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): JobViewHolder {
         val binding = CardJobBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return JobViewHolder(binding)
@@ -25,28 +25,28 @@ class JobAdapter(private val onItemClick:(Job)->Unit ):ListAdapter<Job,JobAdapte
     }
 
     inner class JobViewHolder(private val binding: CardJobBinding) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(job: Job) {
+        fun bind(result: Result) {
             binding.apply {
                 // Set the job title or fallback to "N/A"
-                tvJobTitle.text = job.title ?: "N/A"
+                tvJobTitle.text = result.title ?: "N/A"
 
                 // Set the salary or fallback to "Not specified"
-                tvSalary.text = job.amount ?: "Not specified"
+                tvSalary.text = result.amount ?: "Not specified"
 
                 // Set the company name or fallback to "Unknown Company"
-                tvCompany.text = job.company_name ?: "Unknown Company"
+                tvCompany.text = result.company_name ?: "Unknown Company"
 
                 // Set the location slug or fallback to "No location provided"
-                tvLocation.text = job.job_location_slug ?: "No location provided"
+                tvLocation.text = result.job_location_slug ?: "No location provided"
 
                 // Set the button text or default it to "Contact HR"
-                btnCallHR.text = job.button_text ?: "Contact HR"
+                btnCallHR.text = result.button_text ?: "Contact HR"
 
                 // Set the fee text or default to "No fees"
-                tvFeeCharged.text = job.fees_text ?: "No fees"
+                tvFeeCharged.text = result.fees_text ?: "No fees"
 
                 // Handle job tags (now a list of `JobTag` objects)
-                val jobTags = job.job_tags
+                val jobTags = result.job_tags
                 if (jobTags != null && jobTags.isNotEmpty()) {
                     // Assuming you're showing the first tag in the list for simplicity
                     val firstTag = jobTags[0]
@@ -61,7 +61,7 @@ class JobAdapter(private val onItemClick:(Job)->Unit ):ListAdapter<Job,JobAdapte
 
                 // Handle the chat button for WhatsApp contact preferences
                 btnChat.setOnClickListener {
-                    val contactPreference = job.contact_preference
+                    val contactPreference = result.contact_preference
                     if (contactPreference?.preference == 1) {
                         val whatsappLink = contactPreference.whatsapp_link
                         if (!whatsappLink.isNullOrEmpty()) {
@@ -77,17 +77,17 @@ class JobAdapter(private val onItemClick:(Job)->Unit ):ListAdapter<Job,JobAdapte
                 }
 
                 // Set a click listener for the root view to handle job item clicks
-                root.setOnClickListener { onItemClick(job) }
+                root.setOnClickListener { onItemClick(result) }
             }
         }
     }
 }
-class JobDiffCallback : DiffUtil.ItemCallback<Job>() {
-    override fun areItemsTheSame(oldItem: Job, newItem: Job): Boolean {
+class JobDiffCallback : DiffUtil.ItemCallback<Result>() {
+    override fun areItemsTheSame(oldItem: Result, newItem: Result): Boolean {
         return oldItem.id == newItem.id
     }
 
-    override fun areContentsTheSame(oldItem: Job, newItem: Job): Boolean {
+    override fun areContentsTheSame(oldItem: Result, newItem: Result): Boolean {
         return oldItem == newItem
     }
 }

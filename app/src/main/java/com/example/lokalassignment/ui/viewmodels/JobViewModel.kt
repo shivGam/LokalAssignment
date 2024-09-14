@@ -36,7 +36,7 @@ class JobViewModel(
     private fun handleJobResponse(response: Response<JobResponse>): Resource<JobResponse> {
         if (response.isSuccessful) {
             response.body()?.let { resultResponse ->
-                if (resultResponse.jobs == null) {
+                if (resultResponse.results == null) {
                     return Resource.Error("No jobs available")
                 }
                 if (JobListResponse == null) {

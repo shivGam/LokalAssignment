@@ -1,6 +1,5 @@
 package com.example.lokalassignment.api
 
-import com.example.lokalassignment.model.Job
 import com.example.lokalassignment.model.JobResponse
 import retrofit2.Response
 import retrofit2.http.GET

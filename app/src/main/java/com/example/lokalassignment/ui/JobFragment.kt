@@ -1,7 +1,6 @@
 package com.example.lokalassignment.ui
 
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -63,11 +62,11 @@ class JobFragment : Fragment() {
                     binding.progressBar.visibility = View.GONE
                     response.data?.let { jobResponse ->
 
-                        println("Jobs received: ${jobResponse.jobs?.size ?: 0}")
-                        if (jobResponse.jobs.isNullOrEmpty()) {
+                        println("Jobs received: ${jobResponse.results?.size ?: 0}")
+                        if (jobResponse.results.isNullOrEmpty()) {
                             showEmptyState("No jobs available")
                         } else {
-                            jobAdapter.submitList(jobResponse.jobs)
+                            jobAdapter.submitList(jobResponse.results)
                             binding.rvJobList.visibility = View.VISIBLE
                         }
                     }

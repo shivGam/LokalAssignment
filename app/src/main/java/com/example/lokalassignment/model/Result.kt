@@ -2,7 +2,7 @@ package com.example.lokalassignment.model
 
 import java.io.Serializable
 
-data class Job(
+data class Result(
     val advertiser: Int?,
     val amount: String?,
     val button_text: String?,
