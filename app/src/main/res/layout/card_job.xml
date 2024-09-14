@@ -27,16 +27,17 @@
             app:layout_constraintTop_toTopOf="parent"
             tools:text="Telecalling Executive"/>
 
-        <ImageButton
-            android:id="@+id/btnFavorite"
+        <ToggleButton
+            android:id="@+id/btnBookmark"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="?attr/selectableItemBackgroundBorderless"
-            android:src="@drawable/book_button"
-
+            android:button="@drawable/like_selector"
+            android:textOn=""
+            android:textOff=""
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            android:contentDescription="Favorite"/>
+            android:contentDescription="Bookmark"/>
 
         <TextView
             android:id="@+id/tvSalary"

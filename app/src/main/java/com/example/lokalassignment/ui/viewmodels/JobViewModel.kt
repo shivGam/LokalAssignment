@@ -4,6 +4,7 @@ import android.app.Application
 import android.content.Context
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
+import com.example.lokalassignment.model.Result
 import android.os.Build
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
@@ -29,24 +30,43 @@ class JobViewModel(
         getJobs()
     }
 
-    private fun getJobs() = viewModelScope.launch{
+    fun getJobs() = viewModelScope.launch{
         safeGetJobs()
     }
 
     private fun handleJobResponse(response: Response<JobResponse>): Resource<JobResponse> {
         if (response.isSuccessful) {
             response.body()?.let { resultResponse ->
+                JobListPage++
                 if (resultResponse.results == null) {
                     return Resource.Error("No jobs available")
                 }
                 if (JobListResponse == null) {
                     JobListResponse = resultResponse
                 }
+                else{
+                    val oldJobs = JobListResponse?.results
+                    val newJobs =resultResponse.results
+                    oldJobs?.addAll(newJobs)
+                }
                 return Resource.Success(JobListResponse ?: resultResponse)
             } ?: return Resource.Error("Empty response body")
         }
         return Resource.Error(response.message())
     }
+
+//    fun saveJob(result : Result) = viewModelScope.launch {
+//        result.is_bookmarked=true
+//        jobRepository.upsert(result)
+//    }
+//
+//    fun getBookmark() = jobRepository.getBookmarkJob()
+//
+//    fun deleteJob(result: Result) = viewModelScope.launch {
+//        result.is_bookmarked = false
+//        jobRepository.deleteJob(result)
+//    }
+
 
     private suspend fun safeGetJobs(){
         JobList.postValue(Resource.Loading())
